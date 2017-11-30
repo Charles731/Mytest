@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mapper总结：namespace是该xml对应的接口全名，insert和select中的id对应方法名，resultType是返回值类型，
+    parameterType是参数类型（这个其实可选），最后#{...}中填写的是方法的参数-->
+<mapper namespace="com.cn.dao.UserDao">
+
+    <resultMap id="user" type="com.cn.entity.User">
+        <id property="u_id" column="U_ID" />
+        <result property="u_name" column="U_NAME" />
+        <result property="password" column="PWD" />
+        <result property="email" column="EMAIL" />
+        <result property="phone" column="PHONE" />
+    </resultMap>
+    <!-- 注意sql语句没有分号结尾 -->
+    <insert id="addUser" parameterType="com.cn.entity.User">
+        INSERT INTO user1(U_NAME,PWD,EMAIL,PHONE) VALUES (#{u_name},#{password},#{email},#{phone})
+    </insert>
+
+    <!-- 注意这里的参数类型是parameterType而不是parameterMap，因为返回的单个类型 -->
+    <select id="findUserByNameAndPwd"  parameterType="map" resultMap="user">
+        SELECT * FROM user1 WHERE U_NAME = #{u_name} AND PWD = #{password}
+    </select>
+
+</mapper>
