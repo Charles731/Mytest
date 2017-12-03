@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace = "">
-    <select id="selectProductsByPage" resultMap="">
-        u_id = #{u_id,jdbcType=INTEGER} limit #{startPos},#{pageSize}
-    </select>
-
-    <select id="getProductsCount" resultType="long" >
-        u_id = #{u_id,jdbcType=INTEGER}
+<mapper namespace = "com.cn.dao.PageDao">
+    <resultMap id="user" type="com.cn.entity.User">
+        <id property="u_id" column="U_ID" />
+        <result property="u_name" column="U_NAME" />
+        <result property="password" column="PWD" />
+        <result property="email" column="EMAIL" />
+        <result property="phone" column="PHONE" />
+    </resultMap>
+    <select id="queryUserByPage" parameterType="map" resultMap="user">
+        SELECT * FROM user1
     </select>
 </mapper>
