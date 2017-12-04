@@ -74,7 +74,7 @@ public class MyPageInterceptor implements Interceptor {
             limitSql = sql + " limit " + (currPage - 1) * pageSize + "," +pageSize;
 
             System.out.println("limitSql:" + limitSql);
-            //将构建完成的分页sql语句赋值个体‘delegate.boundSql.sql’，偷天换日
+            //将构建完成的分页sql语句赋值个体‘delegate.boundSql.sql’
             MetaObjectHandler.setValue("delegate.boundle.sql",limitSql);
 
         }
