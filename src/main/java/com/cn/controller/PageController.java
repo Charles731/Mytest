@@ -1,22 +1,32 @@
 package com.cn.controller;
 
+import com.cn.entity.Page;
 import com.cn.entity.User;
 import com.cn.service.PageService;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 /**
  * Created by dellpc on 2017/12/1.
  */
-@ResponseBody
-@RequestMapping("")
+@Controller
+@RequestMapping("/page")
 public class PageController {
 
-    public List<User> getUserByPage(@PathVariable("currPage") int currPage, @PathVariable("pageSize") int pageSize) {
-        PageService pageService;
-        List<User> user = pageService.queryUserByPage(currPage,pageSize);
+    @Autowired
+    PageService pageService;
+
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
+    @ResponseBody
+    public List<User> getUserByPage(@RequestBody Page page) {
+
+        int currPage = page.getCurrPage();
+        int pageSize = page.getPageSize();
+        System.out.println("currPage:" + currPage + " pageSize:" + pageSize);
+        List<User> users = pageService.queryUserByPage(currPage,pageSize);
+        return users;
     }
 }

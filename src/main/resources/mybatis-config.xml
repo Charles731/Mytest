@@ -9,4 +9,9 @@
             <property name="dbType" value="mysql" />
         </plugin>
     </plugins>
+
+    <!--<mappers>-->
+        <!--<mapper resource="E:\IdeaWorkspace\Mytest\src\main\resources\mapper\PageMapper.xml" />-->
+
+    <!--</mappers>-->
 </configuration>

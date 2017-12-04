@@ -30,21 +30,22 @@ public class MyPageInterceptor implements Interceptor {
 
 
     public Object intercept(Invocation invocation) throws Throwable {
+
         //获取StatementHandler，默认是RoutingStatementHandler
         StatementHandler statementHandler = (StatementHandler) invocation.getTarget();
         //获取StatementHandler包装类
         MetaObject MetaObjectHandler = SystemMetaObject.forObject(statementHandler);
 
-        //分离代理对象链
-        while (MetaObjectHandler.hasGetter("h")) {
-            Object obj = MetaObjectHandler.getValue("h");
-            MetaObjectHandler = SystemMetaObject.forObject(obj);
-        }
-
-        while (MetaObjectHandler.hasGetter("target")) {
-            Object obj = MetaObjectHandler.getValue("target");
-            MetaObjectHandler = SystemMetaObject.forObject(obj);
-        }
+//        //分离代理对象链
+//        while (MetaObjectHandler.hasGetter("h")) {
+//            Object obj = MetaObjectHandler.getValue("h");
+//            MetaObjectHandler = SystemMetaObject.forObject(obj);
+//        }
+//
+//        while (MetaObjectHandler.hasGetter("target")) {
+//            Object obj = MetaObjectHandler.getValue("target");
+//            MetaObjectHandler = SystemMetaObject.forObject(obj);
+//        }
 
         //获取查询接口映射的相关信息
         MappedStatement mappedStatement = (MappedStatement) MetaObjectHandler.getValue("delegate.mappedStatement");
@@ -60,8 +61,8 @@ public class MyPageInterceptor implements Interceptor {
             //paraObject = (Map<String,Object>) statementHandler.getBoundSql().getParameterObject();
 
             //参数名称和在service中设置到map中的名称一致
-            currPage = (int) paraObject.get("currPage");
-            pageSize = (int) paraObject.get("pageSize");
+            currPage =  Integer.getInteger(paraObject.get("currPage").toString());
+            pageSize =  Integer.getInteger(paraObject.get("pageSize").toString());
 
             String sql = (String) MetaObjectHandler.getValue("delegate.boundSql.sql");
             //也可以通过statementHandler直接获取
@@ -72,6 +73,7 @@ public class MyPageInterceptor implements Interceptor {
             sql = sql.trim();
             limitSql = sql + " limit " + (currPage - 1) * pageSize + "," +pageSize;
 
+            System.out.println("limitSql:" + limitSql);
             //将构建完成的分页sql语句赋值个体‘delegate.boundSql.sql’，偷天换日
             MetaObjectHandler.setValue("delegate.boundle.sql",limitSql);
 
