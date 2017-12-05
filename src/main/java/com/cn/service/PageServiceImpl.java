@@ -2,6 +2,8 @@ package com.cn.service;
 
 import com.cn.dao.PageDao;
 import com.cn.entity.User;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +26,8 @@ public class PageServiceImpl implements PageService{
         Map<String,Object> data = new HashMap<String,Object>();
         data.put("currPage",currPage);
         data.put("pageSize",pageSize);
-        List<User> users = pageDao.queryUserByPage(data);
+        PageHelper.startPage(currPage,pageSize);
+        List<User> users = pageDao.queryUserByPage();
         return users;
     }
 }

@@ -10,5 +10,5 @@ import java.util.Map;
  * Created by dellpc on 2017/11/30.
  */
 public interface PageDao {
-    List<User> queryUserByPage(Map<String,Object> data);
+    List<User> queryUserByPage();
 }
